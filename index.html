@@ -239,6 +239,26 @@ nav{display:flex;align-items:center;justify-content:space-between;gap:20px;heigh
 .tcard .tname{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#aaa;}
 .tcard .trole{font-size:12px;color:#ccc;margin-top:4px;}
 
+/* ---- ENQUIRY FORM ---- */
+.enquiry-band{background:#1a1610;color:#fff;padding:clamp(60px,8vw,100px) 0;border-bottom:1px solid #2a2318;}
+.enquiry-inner{max-width:540px;margin:0 auto;text-align:center;}
+.enquiry-inner .sect-eyebrow{color:#B98A3E;}
+.enquiry-inner .sect-h{color:#fff;margin:14px auto 18px;}
+.enquiry-inner .sub{color:#999;margin-bottom:clamp(28px,3vw,42px);line-height:1.75;}
+.eform{text-align:left;display:flex;flex-direction:column;gap:24px;}
+.efield label{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#B98A3E;margin-bottom:9px;}
+.efield input{width:100%;background:transparent;border:none;border-bottom:1px solid #3a3228;padding:10px 2px;font-family:'DM Sans',sans-serif;font-size:15.5px;color:#fff;transition:border-color .25s;border-radius:0;appearance:none;}
+.efield input:focus{border-color:#B98A3E;outline:none;}
+.efield input::placeholder{color:#555;}
+.eform .cta-enquiry{margin-top:14px;width:100%;padding:16px 28px;border:1px solid #B98A3E;font-size:13.5px;letter-spacing:.05em;color:#fff;background:transparent;transition:background .22s,color .22s;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.eform .cta-enquiry:hover{background:#B98A3E;color:#111;}
+.enquiry-success{display:none;padding:20px 0;text-align:center;}
+.enquiry-success.show{display:block;}
+.enquiry-success h3{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:#fff;margin-bottom:10px;}
+.enquiry-success p{color:#888;line-height:1.65;}
+.enquiry-or{display:flex;align-items:center;gap:16px;margin-top:8px;color:#555;font-size:12px;letter-spacing:.1em;text-transform:uppercase;}
+.enquiry-or::before,.enquiry-or::after{content:'';flex:1;border-top:1px solid #2a2318;}
+
 /* ---- CONSULT ---- */
 .consult-band{background:#111;color:#fff;padding:clamp(80px,10vw,140px) 0;}
 .consult-inner{max-width:600px;margin:0 auto;text-align:center;}
@@ -369,6 +389,14 @@ footer{padding:clamp(44px,6vw,64px) 0 32px;border-top:1px solid #eee;}
   .tcard{padding:24px 18px;}
   .tcard p{font-size:1.05rem;margin-bottom:16px;}
   .tcard .tname{font-size:11px;}
+
+  /* ENQUIRY */
+  .enquiry-band{padding:44px 0;}
+  .enquiry-inner .sect-h{font-size:clamp(1.9rem,7vw,2.6rem);}
+  .enquiry-inner .sub{font-size:14px;margin-bottom:22px;}
+  .eform{gap:18px;}
+  .efield input{font-size:16px;}
+  .cta-enquiry{font-size:13px;padding:15px 22px;}
 
   /* CONSULT */
   .consult-band{padding:52px 0;}
@@ -678,6 +706,8 @@ footer{padding:clamp(44px,6vw,64px) 0 32px;border-top:1px solid #eee;}
 .nav-logo:hover .nav-mark{transform:rotateY(360deg);}
 
 </style>
+<!-- Warmly visitor identification -->
+<script id="warmly-script-loader" src="https://opps-widget.getwarmly.com/warmly.js?clientId=d5f39a32242a89931f127731bd327bed" defer></script>
 </head>
 <body>
 
@@ -861,6 +891,31 @@ footer{padding:clamp(44px,6vw,64px) 0 32px;border-top:1px solid #eee;}
     <div class="sect-eyebrow reveal">What Clients Say</div>
     <h2 class="sect-h reveal" style="margin-bottom:clamp(36px,5vw,64px);">Their words,<br>not ours.</h2>
     <div class="tgrid" id="tgrid"></div>
+  </div>
+</section>
+
+<!-- ENQUIRY FORM -->
+<section class="enquiry-band" id="enquiry">
+  <div class="wrap">
+    <div class="enquiry-inner">
+      <div class="sect-eyebrow reveal">Get in Touch</div>
+      <h2 class="sect-h reveal">Leave Your Details,<br>We&rsquo;ll Reach Out</h2>
+      <p class="sub reveal">Share your contact and we&rsquo;ll get back to you within 24 hours to discuss your dream piece.</p>
+      <div id="enquiryFormView" class="reveal">
+        <form class="eform" id="eform">
+          <div class="efield"><label>Your Name</label><input id="e-name" placeholder="Full name" required></div>
+          <div class="efield"><label>Email Address</label><input id="e-email" type="email" placeholder="you@example.com" required></div>
+          <div class="efield"><label>Phone Number</label><input id="e-phone" type="tel" placeholder="+91 90521 37221" required></div>
+          <button type="submit" class="cta-enquiry">Send Enquiry &rarr;</button>
+        </form>
+        <div class="enquiry-or">or</div>
+      </div>
+      <div class="enquiry-success" id="enquirySuccess">
+        <svg class="check-wrap" viewBox="0 0 58 58" aria-hidden="true"><circle cx="29" cy="29" r="25"/><path d="M17 30L25.5 38.5 41 21"/></svg>
+        <h3>Thank you!</h3>
+        <p>We&rsquo;ve received your details.<br>Kedareswari will reach out within 24 hours.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1473,6 +1528,32 @@ cform.addEventListener('submit', function(e){
   document.getElementById('successV').classList.add('show');
   // Auto-open WhatsApp after 1.4s so user sees the success confirmation first
   setTimeout(function(){ window.open(url,'_blank'); }, 1400);
+});
+
+// ===== ENQUIRY FORM =====
+var eform = document.getElementById('eform');
+eform.addEventListener('submit', function(e){
+  e.preventDefault();
+  var name  = document.getElementById('e-name').value;
+  var email = document.getElementById('e-email').value;
+  var phone = document.getElementById('e-phone').value;
+
+  // Log to the same tracker sheet
+  fetch(SHEET_WEBHOOK_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ name: name, email: email, whatsapp: phone, source: 'enquiry_form' })
+  }).catch(function(err){ console.error('Sheet log failed', err); });
+
+  // Identify visitor in Warmly via email
+  if(window.warmly && window.warmly.identify){
+    window.warmly.identify({ email: email, name: name, phone: phone });
+  }
+
+  // Show success
+  document.getElementById('enquiryFormView').style.display = 'none';
+  document.getElementById('enquirySuccess').classList.add('show');
 });
 
 })();
